@@ -1,0 +1,63 @@
+From 269f3102c1005ab25fb4d06f86e8d7156ed11ea0 Mon Sep 17 00:00:00 2001
+From: cord <cord.meados@intel.com>
+Date: Mon, 9 Mar 2020 10:31:21 -0700
+Subject: [PATCH] change reserved tp_print slot from nullptr to 0. Fixes C
+ compatibility.
+
+---
+ tensorflow/python/eager/pywrap_tfe_src.cc           | 4 ++--
+ tensorflow/python/lib/core/bfloat16.cc              | 2 +-
+ tensorflow/python/lib/core/ndarray_tensor_bridge.cc | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/tensorflow/python/eager/pywrap_tfe_src.cc b/tensorflow/python/eager/pywrap_tfe_src.cc
+index ba9d8a36..54562454 100644
+--- a/tensorflow/python/eager/pywrap_tfe_src.cc
++++ b/tensorflow/python/eager/pywrap_tfe_src.cc
+@@ -1319,7 +1319,7 @@ static PyTypeObject TFE_Py_Tape_Type = {
+     sizeof(TFE_Py_Tape),                          /* tp_basicsize */
+     0,                                            /* tp_itemsize */
+     &TFE_Py_Tape_Delete,                          /* tp_dealloc */
+-    nullptr,                                      /* tp_print */
++    0,                                            /* tp_print */
+     nullptr,                                      /* tp_getattr */
+     nullptr,                                      /* tp_setattr */
+     nullptr,                                      /* tp_reserved */
+@@ -1353,7 +1353,7 @@ static PyTypeObject TFE_Py_ForwardAccumulator_Type = {
+     sizeof(TFE_Py_ForwardAccumulator),                      /* tp_basicsize */
+     0,                                                      /* tp_itemsize */
+     &TFE_Py_ForwardAccumulatorDelete,                       /* tp_dealloc */
+-    nullptr,                                                /* tp_print */
++    0,                                                      /* tp_print */
+     nullptr,                                                /* tp_getattr */
+     nullptr,                                                /* tp_setattr */
+     nullptr,                                                /* tp_reserved */
+diff --git a/tensorflow/python/lib/core/bfloat16.cc b/tensorflow/python/lib/core/bfloat16.cc
+index fde3a837..54be7637 100644
+--- a/tensorflow/python/lib/core/bfloat16.cc
++++ b/tensorflow/python/lib/core/bfloat16.cc
+@@ -317,7 +317,7 @@ PyTypeObject PyBfloat16_Type = {
+     sizeof(PyBfloat16),                        // tp_basicsize
+     0,                                         // tp_itemsize
+     nullptr,                                   // tp_dealloc
+-    nullptr,                                   // tp_print
++    0,                                         // tp_print
+     nullptr,                                   // tp_getattr
+     nullptr,                                   // tp_setattr
+     nullptr,                                   // tp_compare / tp_reserved
+diff --git a/tensorflow/python/lib/core/ndarray_tensor_bridge.cc b/tensorflow/python/lib/core/ndarray_tensor_bridge.cc
+index 16f69341..03ff7710 100644
+--- a/tensorflow/python/lib/core/ndarray_tensor_bridge.cc
++++ b/tensorflow/python/lib/core/ndarray_tensor_bridge.cc
+@@ -86,7 +86,7 @@ PyTypeObject TensorReleaserType = {
+     0,                                /* tp_itemsize */
+     /* methods */
+     TensorReleaser_dealloc,      /* tp_dealloc */
+-    nullptr,                     /* tp_print */
++    0,                           /* tp_print */
+     nullptr,                     /* tp_getattr */
+     nullptr,                     /* tp_setattr */
+     nullptr,                     /* tp_compare */
+-- 
+2.17.1
+
